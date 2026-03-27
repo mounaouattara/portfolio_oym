@@ -26,7 +26,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
           initial={{ opacity: 0, scale: 0.98, y: 10 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.98, y: 10 }}
-          className="relative w-full max-w-5xl max-h-[90vh] overflow-hidden bg-bg border border-black/20 flex flex-col md:flex-row shadow-[0_0_50px_rgba(0,0,0,0.05)] tech-card"
+          className="relative w-full max-w-5xl h-full md:h-auto md:max-h-[90vh] overflow-hidden bg-bg border border-black/20 flex flex-col md:flex-row shadow-[0_0_50px_rgba(0,0,0,0.05)] tech-card"
         >
           {/* HUD Corners */}
           <div className="hud-corner hud-corner-tl" />
@@ -34,12 +34,12 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
           
           <button 
             onClick={onClose}
-            className="absolute top-6 right-6 z-50 p-3 bg-black/10 backdrop-blur-md text-black hover:bg-black hover:text-bg transition-all hover:scale-110 border border-black/20"
+            className="absolute top-4 right-4 md:top-6 md:right-6 z-[110] p-3 bg-black/10 backdrop-blur-md text-black hover:bg-black hover:text-bg transition-all hover:scale-110 border border-black/20 rounded-full md:rounded-none"
           >
             <X size={20} />
           </button>
 
-          <div className="w-full md:w-2/5 relative overflow-hidden bg-black/5 border-r border-black/10">
+          <div className="w-full md:w-2/5 relative h-64 md:h-auto overflow-hidden bg-black/5 border-b md:border-b-0 md:border-r border-black/10 shrink-0">
             <img 
               src={project.imageUrl || `https://picsum.photos/seed/${project.title}/800/1200`}
               alt={project.title}
@@ -55,37 +55,37 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
               className="absolute left-0 right-0 h-[1px] bg-black/40 shadow-[0_0_10px_rgba(0,0,0,0.1)] z-20"
             />
             
-            <div className="absolute bottom-12 left-12 right-12">
-              <span className="text-[10px] font-mono font-bold uppercase tracking-[0.4em] text-black mb-4 block">
+            <div className="absolute bottom-6 left-6 right-6 md:bottom-12 md:left-12 md:right-12">
+              <span className="text-[8px] md:text-[10px] font-mono font-bold uppercase tracking-[0.4em] text-black mb-2 md:mb-4 block">
                 MODULE_ID: {project.category}
               </span>
-              <h2 className="text-5xl font-mono font-bold text-fg leading-none tracking-tighter mb-6 uppercase">
+              <h2 className="text-3xl md:text-5xl font-mono font-bold text-fg leading-none tracking-tighter mb-2 md:mb-6 uppercase">
                 {project.title}
               </h2>
             </div>
           </div>
 
           {/* Right: Details */}
-          <div className="w-full md:w-3/5 p-12 md:p-16 overflow-y-auto custom-scrollbar bg-black/5 backdrop-blur-xl">
-            <div className="space-y-16">
+          <div className="w-full md:w-3/5 p-6 md:p-16 overflow-y-auto custom-scrollbar bg-black/5 backdrop-blur-xl flex-grow">
+            <div className="space-y-8 md:space-y-16">
               <section>
-                <div className="flex items-center gap-4 mb-8 text-black/60">
+                <div className="flex items-center gap-4 mb-4 md:mb-8 text-black/60">
                   <Calendar size={14} />
-                  <span className="text-[10px] font-mono uppercase tracking-[0.3em]">
+                  <span className="text-[8px] md:text-[10px] font-mono uppercase tracking-[0.3em]">
                     TIMESTAMP: {new Date(project.date).toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })}
                   </span>
                 </div>
-                <p className="text-xl md:text-2xl text-fg/80 font-mono leading-relaxed">
+                <p className="text-lg md:text-2xl text-fg/80 font-mono leading-relaxed">
                   {'>'} {project.description}
                 </p>
               </section>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-12">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 md:gap-12">
                 <section>
-                  <h3 className="text-[10px] font-mono font-bold text-black uppercase tracking-[0.4em] mb-6">CORE_PROTOCOLS</h3>
-                  <div className="flex flex-wrap gap-3">
+                  <h3 className="text-[8px] md:text-[10px] font-mono font-bold text-black uppercase tracking-[0.4em] mb-4 md:mb-6">CORE_PROTOCOLS</h3>
+                  <div className="flex flex-wrap gap-2 md:gap-3">
                     {project.hardSkills?.map(skill => (
-                      <span key={skill} className="px-4 py-2 bg-black/5 border border-black/20 text-[9px] font-mono text-black/80 uppercase tracking-widest">
+                      <span key={skill} className="px-3 py-1.5 md:px-4 md:py-2 bg-black/5 border border-black/20 text-[8px] md:text-[9px] font-mono text-black/80 uppercase tracking-widest">
                         [{skill}]
                       </span>
                     ))}
@@ -93,10 +93,10 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
                 </section>
 
                 <section>
-                  <h3 className="text-[10px] font-mono font-bold text-black uppercase tracking-[0.4em] mb-6">COGNITIVE_ASSETS</h3>
-                  <div className="flex flex-wrap gap-3">
+                  <h3 className="text-[8px] md:text-[10px] font-mono font-bold text-black uppercase tracking-[0.4em] mb-4 md:mb-6">COGNITIVE_ASSETS</h3>
+                  <div className="flex flex-wrap gap-2 md:gap-3">
                     {project.softSkills?.map(skill => (
-                      <span key={skill} className="px-4 py-2 bg-black/5 border border-black/20 text-[9px] font-mono text-black/80 uppercase tracking-widest">
+                      <span key={skill} className="px-3 py-1.5 md:px-4 md:py-2 bg-black/5 border border-black/20 text-[8px] md:text-[9px] font-mono text-black/80 uppercase tracking-widest">
                         [{skill}]
                       </span>
                     ))}
@@ -105,33 +105,33 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
               </div>
 
               <section>
-                <h3 className="text-[10px] font-mono font-bold text-black uppercase tracking-[0.4em] mb-10">OPERATIONAL_WORKFLOW</h3>
-                <div className="space-y-8">
+                <h3 className="text-[8px] md:text-[10px] font-mono font-bold text-black uppercase tracking-[0.4em] mb-6 md:mb-10">OPERATIONAL_WORKFLOW</h3>
+                <div className="space-y-6 md:space-y-8">
                   {project.workflow.map((step, i) => (
-                    <div key={i} className="flex items-start gap-6 group">
-                      <span className="text-[10px] font-mono text-black/40 pt-1 group-hover:text-black transition-colors">[{i+1}]</span>
+                    <div key={i} className="flex items-start gap-4 md:gap-6 group">
+                      <span className="text-[8px] md:text-[10px] font-mono text-black/40 pt-1 group-hover:text-black transition-colors">[{i+1}]</span>
                       <div>
-                        <div className="text-[10px] font-mono text-black/50 uppercase tracking-[0.2em] mb-2">{step.stage}</div>
-                        <div className="text-sm font-bold text-fg uppercase tracking-tight font-mono">{step.tools.join(' // ')}</div>
+                        <div className="text-[8px] md:text-[10px] font-mono text-black/50 uppercase tracking-[0.2em] mb-1 md:mb-2">{step.stage}</div>
+                        <div className="text-xs md:text-sm font-bold text-fg uppercase tracking-tight font-mono">{step.tools.join(' // ')}</div>
                       </div>
                     </div>
                   ))}
                 </div>
               </section>
 
-              <div className="pt-12 border-t border-black/10 flex flex-wrap gap-10">
+              <div className="pt-8 md:pt-12 border-t border-black/10 flex flex-wrap gap-6 md:gap-10">
                 {project.github && (
                   <a 
                     href={project.github} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="flex items-center gap-3 text-fg hover:text-black transition-all font-mono text-[10px] uppercase tracking-[0.4em] group"
+                    className="flex items-center gap-3 text-fg hover:text-black transition-all font-mono text-[8px] md:text-[10px] uppercase tracking-[0.4em] group"
                   >
                     <Github size={18} className="group-hover:scale-110 transition-transform" />
                     ACCESS_SOURCE_CODE
                   </a>
                 )}
-                <div className="flex items-center gap-3 text-black/40 font-mono text-[10px] uppercase tracking-[0.4em] cursor-not-allowed">
+                <div className="flex items-center gap-3 text-black/40 font-mono text-[8px] md:text-[10px] uppercase tracking-[0.4em] cursor-not-allowed">
                   <Zap size={18} />
                   LIVE_DEMO_OFFLINE
                 </div>

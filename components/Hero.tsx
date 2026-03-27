@@ -95,7 +95,9 @@ const Hero: React.FC = () => {
               {[Terminal, Database, Layers, Zap].map((Icon, i) => (
                 <motion.div
                   key={i}
-                  className="absolute w-12 h-12 clinical-glass rounded-full flex items-center justify-center text-accent glossy border-white/60 shadow-lg"
+                  whileHover={{ scale: 1.2, zIndex: 50 }}
+                  whileTap={{ scale: 0.9 }}
+                  className="absolute w-12 h-12 clinical-glass rounded-full flex items-center justify-center text-accent glossy border-white/60 shadow-lg cursor-pointer"
                   animate={{
                     y: [0, -30, 0],
                     x: [0, 15, 0],

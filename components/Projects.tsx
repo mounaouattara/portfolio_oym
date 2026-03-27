@@ -84,9 +84,13 @@ const ProjectCard: React.FC<{ project: Project; onOpenProject: (project: Project
           <div className="flex items-center gap-4 opacity-0 group-hover:opacity-100 transition-all duration-700 delay-200 transform translate-y-4 group-hover:translate-y-0">
             <div className="flex -space-x-2">
               {[Cpu, Activity, Database].map((Icon, i) => (
-                <div key={i} className="w-6 h-6 rounded-full bg-black flex items-center justify-center border border-bg">
+                <motion.div 
+                  key={i} 
+                  whileHover={{ scale: 1.3, zIndex: 10 }}
+                  className="w-6 h-6 rounded-full bg-black flex items-center justify-center border border-bg relative"
+                >
                   <Icon size={10} className="text-white" />
-                </div>
+                </motion.div>
               ))}
             </div>
             <div className="flex items-center gap-2">
@@ -110,7 +114,7 @@ const ProjectCard: React.FC<{ project: Project; onOpenProject: (project: Project
   );
 };
 
-const ProjectsSection: React.FC = () => {
+const ProjectsSection: React.FC<{ lang: 'fr' | 'en' }> = ({ lang }) => {
   const [activeCategory, setActiveCategory] = useState('Tous');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
@@ -125,33 +129,38 @@ const ProjectsSection: React.FC = () => {
   }, [activeCategory]);
 
   return (
-    <div className="w-full flex flex-col items-center max-w-7xl mx-auto px-10 bg-transparent relative overflow-hidden">
+    <div className="w-full flex flex-col items-center max-w-7xl mx-auto px-6 md:px-10 bg-transparent relative overflow-hidden">
+      {/* Navigation Anchors at the very top */}
+      <div className="absolute -top-32 left-0 w-0 h-0 invisible" id="vision" />
+      <div className="absolute -top-32 left-0 w-0 h-0 invisible" id="nlp" />
+      <div className="absolute -top-32 left-0 w-0 h-0 invisible" id="forecast" />
+      <div className="absolute -top-32 left-0 w-0 h-0 invisible" id="analytics" />
       {/* Blueprint Background Elements */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.03]" 
            style={{ backgroundImage: 'linear-gradient(var(--fg) 1px, transparent 1px), linear-gradient(90deg, var(--fg) 1px, transparent 1px)', backgroundSize: '100px 100px' }} />
       
       {/* Decorative Robotic Trees Forest - PROGRESSIVE CASCADE */}
       {/* Top Layer - Near Selected Works */}
-      <div className="absolute -left-40 -top-10 opacity-10 pointer-events-none hidden xl:block">
+      <div className="absolute -left-40 -top-40 opacity-10 pointer-events-none hidden xl:block">
         <RoboticTree height={800} color="black" delay={0.2} scale={1.1} />
       </div>
-      <div className="absolute -right-40 top-10 opacity-10 pointer-events-none hidden xl:block">
+      <div className="absolute -right-40 -top-20 opacity-10 pointer-events-none hidden xl:block">
         <RoboticTree height={700} color="black" delay={0.4} scale={1.0} />
       </div>
 
       {/* Mid Layer - Transitioning to Digital Laboratory */}
-      <div className="absolute -left-60 top-[25%] opacity-15 pointer-events-none hidden xl:block">
+      <div className="absolute -left-60 top-[10%] opacity-15 pointer-events-none hidden xl:block">
         <RoboticTree height={1200} color="black" delay={0.8} scale={1.4} />
       </div>
-      <div className="absolute -right-60 top-[35%] opacity-15 pointer-events-none hidden xl:block">
+      <div className="absolute -right-60 top-[20%] opacity-15 pointer-events-none hidden xl:block">
         <RoboticTree height={1000} color="black" delay={1.1} scale={1.3} />
       </div>
 
       {/* Main Layer - Digital Laboratory Core */}
-      <div className="absolute -left-20 top-[55%] opacity-[0.08] pointer-events-none hidden xl:block">
+      <div className="absolute -left-20 top-[40%] opacity-[0.08] pointer-events-none hidden xl:block">
         <RoboticTree height={1100} color="black" delay={1.5} scale={1.2} />
       </div>
-      <div className="absolute -right-20 top-[65%] opacity-[0.08] pointer-events-none hidden xl:block">
+      <div className="absolute -right-20 top-[50%] opacity-[0.08] pointer-events-none hidden xl:block">
         <RoboticTree height={900} color="black" delay={1.8} scale={1.1} />
       </div>
 
@@ -161,50 +170,43 @@ const ProjectsSection: React.FC = () => {
       </div>
 
       {/* Technical Annotations */}
-      <div className="absolute top-20 left-10 text-[8px] font-mono opacity-20 uppercase tracking-widest hidden lg:block">
+      <div className="absolute top-10 left-10 text-[8px] font-mono opacity-20 uppercase tracking-widest hidden lg:block">
         [SEC_ZONE_04] // LAB_ENV_INIT
       </div>
       <div className="absolute bottom-20 right-10 text-[8px] font-mono opacity-20 uppercase tracking-widest hidden lg:block rotate-90 origin-right">
         DATA_STREAM_ACTIVE // 0x44F2
       </div>
 
-      <div className="mb-24 w-full relative z-10">
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12">
-          <div className="max-w-4xl">
-            <div className="flex items-center gap-4 mb-8">
-              <span className="text-black font-mono text-[10px] font-bold tracking-[0.6em] uppercase">Mission_Logs</span>
-              <div className="h-[1px] w-16 bg-black/20" />
-              <div className="flex items-center gap-2">
-                <Zap size={12} className="text-black animate-pulse" />
-                <span className="text-[9px] font-mono opacity-40 uppercase">Lab_Status: Active</span>
-              </div>
-            </div>
-            <h2 className="text-6xl md:text-9xl font-mono font-bold text-fg tracking-tighter leading-tight uppercase">
-              DIGITAL <span className="text-black italic font-light">LABORATORY</span>.
-            </h2>
-          </div>
-
+      <div className="mb-8 md:mb-12 w-full relative z-10">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-end gap-8 md:gap-12">
           {/* Category Filter */}
-          <div className="flex flex-wrap gap-4">
-            {categories.map(cat => (
-              <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
-                className={`px-6 py-2 text-[9px] font-bold uppercase tracking-[0.2em] transition-all duration-500 border font-mono ${
-                  activeCategory === cat 
-                    ? 'bg-black text-white border-black shadow-[0_0_15px_rgba(0,0,0,0.1)]' 
-                    : 'text-fg/40 border-black/10 hover:border-black/30'
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
+          <div className="flex flex-wrap gap-2 md:gap-3">
+            {categories.map(cat => {
+              const id = cat === 'Computer Vision' ? 'vision' : 
+                         cat === 'NLP' ? 'nlp' : 
+                         cat === 'Time Series' ? 'forecast' : 
+                         cat === 'Data Analytics' ? 'analytics' : undefined;
+              return (
+                <button
+                  key={cat}
+                  id={id}
+                  onClick={() => setActiveCategory(cat)}
+                  className={`px-4 py-2 md:px-5 md:py-2 text-[8px] md:text-[9px] font-bold uppercase tracking-[0.1em] md:tracking-[0.2em] transition-all duration-500 border font-mono ${
+                    activeCategory === cat 
+                      ? 'bg-black text-white border-black shadow-[0_0_15px_rgba(0,0,0,0.1)]' 
+                      : 'text-fg/40 border-black/10 hover:border-black/30 bg-white/50 backdrop-blur-sm'
+                  }`}
+                >
+                  {cat === 'Tous' ? (lang === 'fr' ? 'TOUS' : 'ALL') : cat}
+                </button>
+              );
+            })}
           </div>
         </div>
       </div>
 
       {/* Projects Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full relative z-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 w-full relative z-10">
         <AnimatePresence mode="popLayout">
           {filteredProjects.map((project, idx) => (
             <ProjectCard 

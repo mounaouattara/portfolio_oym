@@ -2,48 +2,48 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { Target, Zap, Award } from 'lucide-react';
 
-const AboutHero = () => (
-  <section className="relative min-h-[80vh] flex items-center pt-48 px-10 overflow-hidden bg-bg mesh-gradient">
+const AboutHero: React.FC<{ lang: 'fr' | 'en' }> = ({ lang }) => (
+  <section className="relative flex items-center pt-16 md:pt-24 px-6 md:px-10 overflow-hidden bg-transparent">
     {/* Overlapping Rings (Image 3) */}
-    <div className="absolute top-0 right-0 w-[800px] h-[800px] opacity-10 pointer-events-none">
+    <div className="absolute top-0 right-0 w-[400px] h-[400px] md:w-[800px] md:h-[800px] opacity-10 pointer-events-none">
       <div className="ring-glow w-full h-full" />
       <div className="ring-glow w-[80%] h-[80%] top-[10%] left-[10%]" />
       <div className="ring-glow w-[60%] h-[60%] top-[20%] left-[20%]" />
     </div>
     
-    <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-32 items-center relative z-10">
+    <div id="bio" className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-32 items-center relative z-10 scroll-mt-32">
       <motion.div
         initial={{ opacity: 0, x: -30 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
         className="relative z-10"
       >
-        <div className="inline-flex items-center gap-4 px-4 py-2 bg-black/5 border border-black/20 text-black text-[10px] font-mono mb-12 uppercase tracking-[0.4em] relative group overflow-hidden">
+        <div className="inline-flex items-center gap-4 px-4 py-2 bg-black/5 border border-black/20 text-black text-[9px] md:text-[10px] font-mono mb-8 md:mb-12 uppercase tracking-[0.3em] md:tracking-[0.4em] relative group overflow-hidden">
           <div className="absolute inset-0 bg-black/10 -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
           <span className="w-2 h-2 rounded-full bg-black animate-pulse" />
           SUBJECT_ANALYSIS_V4.0
         </div>
         
-        <h1 className="text-8xl md:text-[10rem] font-bold leading-[0.8] mb-12 tracking-tighter uppercase relative">
+        <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-[10rem] font-bold leading-[0.9] md:leading-[0.8] mb-8 md:mb-12 tracking-tighter uppercase relative">
           <span className="text-fg block">MOUNA</span>
-          <span className="text-black block ml-24">OUATTARA</span>
+          <span className="text-black block ml-0 md:ml-24">OUATTARA</span>
           
           {/* HUD Elements on Text */}
           <div className="absolute -top-4 -left-4 w-8 h-8 border-t border-l border-black/40" />
           <div className="absolute -bottom-4 -right-4 w-8 h-8 border-b border-r border-black/40" />
         </h1>
         
-        <p className="text-xl md:text-2xl text-black/60 max-w-xl font-mono leading-relaxed mb-16 border-l border-black/20 pl-8">
-          {'>'} DATA SCIENTIST POLYVALENTE, EXPERTE DE L'ANALYSE À LA MISE EN PRODUCTION ML/IA.
+        <p className="text-base md:text-2xl text-black/60 max-w-xl font-mono leading-relaxed mb-10 md:mb-16 border-l border-black/20 pl-6 md:pl-8">
+          {'>'} {lang === 'fr' ? "DATA SCIENTIST POLYVALENTE, EXPERTE DE L'ANALYSE À LA MISE EN PRODUCTION ML/IA." : "VERSATILE DATA SCIENTIST, EXPERT FROM ANALYSIS TO ML/AI PRODUCTION."}
           <span className="animate-pulse">_</span>
         </p>
 
-        <div className="flex flex-wrap gap-8">
+        <div className="flex flex-wrap gap-4 md:gap-8">
           <motion.button 
             whileHover={{ scale: 1.05, backgroundColor: '#000000', color: '#FFFFFF' }}
-            className="px-12 py-6 border border-black text-black transition-all duration-500 uppercase tracking-[0.4em] text-[10px] font-mono shadow-[0_0_20px_rgba(0,0,0,0.05)] relative group overflow-hidden"
+            className="px-8 py-4 md:px-12 md:py-6 border border-black text-black transition-all duration-500 uppercase tracking-[0.3em] md:tracking-[0.4em] text-[9px] md:text-[10px] font-mono shadow-[0_0_20px_rgba(0,0,0,0.05)] relative group overflow-hidden"
           >
-            <span className="relative z-10">DOWNLOAD_TECHNICAL_DOSSIER</span>
+            <span className="relative z-10">{lang === 'fr' ? 'TÉLÉCHARGER_DOSSIER' : 'DOWNLOAD_DOSSIER'}</span>
             <div className="absolute inset-0 bg-black/5 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 skew-x-12" />
           </motion.button>
         </div>
@@ -53,7 +53,7 @@ const AboutHero = () => (
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1.5, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-        className="relative aspect-square lg:aspect-[4/5]"
+        className="relative aspect-square lg:aspect-[4/5] max-w-md mx-auto lg:max-w-none"
       >
         <div className="relative w-full h-full overflow-hidden border border-black/20 group bg-black/5 p-4 tech-card">
           <div className="hud-corner hud-corner-tl" />
@@ -90,33 +90,33 @@ const AboutHero = () => (
   </section>
 );
 
-const About: React.FC = () => {
+const About: React.FC<{ lang: 'fr' | 'en' }> = ({ lang }) => {
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="pb-32"
+      className="pb-6 md:pb-10"
     >
-      <AboutHero />
+      <AboutHero lang={lang} />
       
-      <div className="max-w-7xl mx-auto px-6 mt-32">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-32">
+      <div className="max-w-7xl mx-auto px-6 mt-4 md:mt-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 mb-12 md:mb-20">
           {[
             { 
-              icon: <Target size={20} />, 
+              icon: <Target className="w-5 h-5 md:w-6 md:h-6" />, 
               title: "COLLABORATIVE", 
               desc: "CAPABLE DE TRAVAILLER EN ÉQUIPE POUR CONCEVOIR DES SOLUTIONS FIABLES ET ORIENTÉES MÉTIER.",
               label: "METHODOLOGY"
             },
             { 
-              icon: <Zap size={20} />, 
+              icon: <Zap className="w-5 h-5 md:w-6 md:h-6" />, 
               title: "AUTONOME", 
               desc: "CAPACITÉ À GÉRER DES PROJETS DE BOUT EN BOUT, DE L'ANALYSE À LA MISE EN PRODUCTION.",
               label: "ADAPTABILITY"
             },
             { 
-              icon: <Award size={20} />, 
+              icon: <Award className="w-5 h-5 md:w-6 md:h-6" />, 
               title: "PROACTIVE", 
               desc: "ENGAGEMENT DANS LA RÉSOLUTION DE PROBLÈMES COMPLEXES AVEC UNE APPROCHE ORIENTÉE RÉSULTATS.",
               label: "VALUES"
@@ -127,28 +127,32 @@ const About: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
+              whileHover={{ y: -5 }}
               transition={{ delay: i * 0.1 }}
-              className="p-10 bg-accent/5 border border-accent/10 hover:border-accent/40 transition-all duration-500 group relative"
+              className="p-6 md:p-10 bg-accent/5 border border-accent/10 hover:border-accent/40 transition-all duration-500 group relative"
             >
               <div className="hud-corner hud-corner-tl opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="w-12 h-12 flex items-center justify-center text-black/30 mb-8 group-hover:text-black transition-colors">
+              <motion.div 
+                className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center text-black/30 mb-6 md:mb-8 group-hover:text-black transition-colors"
+                whileHover={{ scale: 1.2 }}
+              >
                 {item.icon}
-              </div>
-              <span className="block text-[8px] font-mono font-bold uppercase tracking-[0.3em] text-black/40 mb-4">{item.label}</span>
-              <h3 className="text-2xl font-mono font-bold text-fg mb-4 tracking-tight">{item.title}</h3>
-              <p className="text-black/60 leading-relaxed font-mono text-sm">
+              </motion.div>
+              <span className="block text-[7px] md:text-[8px] font-mono font-bold uppercase tracking-[0.3em] text-black/40 mb-3 md:mb-4">{item.label}</span>
+              <h3 className="text-xl md:text-2xl font-mono font-bold text-fg mb-3 md:mb-4 tracking-tight">{item.title}</h3>
+              <p className="text-black/60 leading-relaxed font-mono text-xs md:text-sm">
                 {'>'} {item.desc}
               </p>
             </motion.div>
           ))}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start py-24 border-t border-black/10">
-          <div className="space-y-10">
-            <h2 className="text-5xl md:text-7xl font-bold text-fg leading-tight uppercase">
+        <div id="education" className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20 items-start py-12 md:py-24 border-t border-black/10 scroll-mt-32">
+          <div className="space-y-6 md:space-y-10">
+            <h2 className="text-4xl md:text-7xl font-bold text-fg leading-tight uppercase">
               L'INTELLIGENCE DES DONNÉES.
             </h2>
-            <div className="space-y-6 text-lg text-black/60 leading-relaxed font-mono">
+            <div className="space-y-4 md:space-y-6 text-base md:text-lg text-black/60 leading-relaxed font-mono">
               <p>
                 {'>'} DATA SCIENTIST PASSIONNÉE PAR L'ANALYSE ET LA VISUALISATION DES DONNÉES JUSQU'À LA MISE EN PRODUCTION DE MODÈLES ML/IA.
               </p>
@@ -157,17 +161,17 @@ const About: React.FC = () => {
               </p>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {[
               { label: 'LOCATION', value: 'PALAISEAU, FR' },
               { label: 'FOCUS', value: 'DATA_SCIENCE' },
               { label: 'EXPERTISE', value: 'MLOPS / IA' },
               { label: 'STATUS', value: 'ACTIVE_AVAILABLE' }
             ].map((item, i) => (
-              <div key={i} className="p-8 bg-black/5 border border-black/10 relative group">
+              <div key={i} className="p-6 md:p-8 bg-black/5 border border-black/10 relative group">
                 <div className="hud-corner hud-corner-tl opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="text-[8px] text-black/40 font-bold uppercase tracking-[0.2em] font-mono mb-3">{item.label}</div>
-                <div className="text-black font-mono font-bold text-lg">{item.value}</div>
+                <div className="text-[7px] md:text-[8px] text-black/40 font-bold uppercase tracking-[0.2em] font-mono mb-2 md:mb-3">{item.label}</div>
+                <div className="text-black font-mono font-bold text-base md:text-lg">{item.value}</div>
               </div>
             ))}
           </div>
