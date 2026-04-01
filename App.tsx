@@ -22,7 +22,8 @@ const SectionWrapper: React.FC<{
   showDynamicBg?: boolean;
   isScrollable?: boolean;
   bgColors?: string[];
-}> = ({ id, children, variants, transition, className, showDynamicBg = false, isScrollable = true, bgColors }) => {
+  navigation?: React.ReactNode;
+}> = ({ id, children, variants, transition, className, showDynamicBg = false, isScrollable = true, bgColors, navigation }) => {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     container: containerRef,
@@ -60,6 +61,7 @@ const SectionWrapper: React.FC<{
         ref={containerRef}
         className={`relative z-10 h-full w-full ${isScrollable ? 'overflow-y-auto' : 'overflow-hidden'} flex flex-col`}
       >
+        {navigation}
         {children}
       </div>
     </motion.section>
@@ -296,6 +298,88 @@ const App: React.FC = () => {
     }
   };
 
+  const navigation = (
+    <nav className={`relative w-full z-[100] h-14 md:h-auto px-6 md:px-12 md:py-10 grid grid-cols-3 items-center font-mono transition-all duration-500 ${
+      activeSection === 'home' 
+        ? 'bg-transparent border-none md:bg-transparent md:border-none' 
+        : 'bg-white backdrop-blur-md border-b border-black/5 md:bg-transparent md:backdrop-blur-none md:border-none'
+    }`}>
+      {/* Left Side: Logo & Status */}
+      <div className="flex justify-start items-center h-full">
+        <motion.div 
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="cursor-pointer flex flex-col justify-center"
+          whileHover={{ x: 5 }}
+          onClick={() => setActiveSection('home')}
+        >
+          <div className="flex items-center gap-3 md:gap-4">
+            <div className={`border border-black/20 flex items-center justify-center font-bold relative transition-all duration-500 ${
+              activeSection === 'home' 
+                ? 'w-8 h-8 md:w-12 md:h-12 text-base md:text-xl' 
+                : 'w-8 h-8 md:w-10 md:h-10 text-base md:text-[14px]'
+            }`}>
+              <div className="absolute -top-0.5 -left-0.5 w-1 h-1 border-t border-l border-black" />
+              <div className="absolute -bottom-0.5 -right-0.5 w-1 h-1 border-b border-r border-black" />
+              MO
+            </div>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Center: Page Title (Mobile only, non-home) */}
+      <div className="flex justify-center items-center h-full">
+        {activeSection !== 'home' && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="md:hidden text-[11px] font-bold uppercase tracking-[0.4em] text-black whitespace-nowrap text-center"
+          >
+            {tabs.find(t => t.id === activeSection)?.label}
+          </motion.div>
+        )}
+      </div>
+
+      {/* Right Side: Navigation Links */}
+      <div className="flex justify-end items-center h-full">
+        {/* Mobile Menu Toggle */}
+        <button 
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          className="md:hidden p-2 bg-black text-white border border-black/10 backdrop-blur-md shadow-lg active:scale-95 transition-transform"
+        >
+          {isMenuOpen ? <X size={18} /> : <Menu size={18} />}
+        </button>
+
+        {/* Desktop Menu */}
+        <div className="hidden md:flex items-center gap-10">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveSection(tab.id)}
+              className={`text-[10px] font-bold uppercase tracking-[0.4em] transition-all duration-500 relative py-2 group whitespace-nowrap ${
+                activeSection === tab.id ? 'text-black' : 'text-black/30 hover:text-black/60'
+              }`}
+            >
+              <span className="relative z-10">{tab.label}</span>
+              {activeSection === tab.id && (
+                <motion.div 
+                  layoutId="nav-glow"
+                  className="absolute inset-0 bg-black/5 -z-10 blur-sm rounded-sm"
+                />
+              )}
+              <div className={`absolute bottom-0 left-0 h-[1px] bg-black transition-all duration-500 ${activeSection === tab.id ? 'w-full' : 'w-0 group-hover:w-1/2'}`} />
+            </button>
+          ))}
+        </div>
+
+        <div className="hidden md:flex items-center gap-4 opacity-20">
+          <div className="h-[1px] w-24 bg-black" />
+          <span className="text-[9px] tracking-[0.5em]">{t.navInterface}</span>
+        </div>
+      </div>
+    </nav>
+  );
+
   const renderSection = () => {
     const transition = {
       duration: 1,
@@ -313,6 +397,7 @@ const App: React.FC = () => {
         return (
           <SectionWrapper
             id="home"
+            navigation={navigation}
             variants={variants}
             transition={transition}
             className={`px-4 sm:px-12 transition-colors duration-1000 ${isCyberMode ? 'bg-[#050B24]' : ''}`}
@@ -529,6 +614,7 @@ const App: React.FC = () => {
         return (
           <SectionWrapper
             id="projects"
+            navigation={navigation}
             variants={variants}
             transition={transition}
             showDynamicBg={false}
@@ -556,6 +642,7 @@ const App: React.FC = () => {
         return (
           <SectionWrapper
             id="about"
+            navigation={navigation}
             variants={variants}
             transition={transition}
             showDynamicBg={false}
@@ -585,6 +672,7 @@ const App: React.FC = () => {
         return (
           <SectionWrapper
             id="skills"
+            navigation={navigation}
             variants={variants}
             transition={transition}
             showDynamicBg={false}
@@ -611,6 +699,7 @@ const App: React.FC = () => {
         return (
           <SectionWrapper
             id="passion"
+            navigation={navigation}
             variants={variants}
             transition={transition}
             showDynamicBg={false}
@@ -690,6 +779,7 @@ const App: React.FC = () => {
         return (
           <SectionWrapper
             id="contact"
+            navigation={navigation}
             variants={variants}
             transition={transition}
             showDynamicBg={false}
@@ -742,87 +832,6 @@ const App: React.FC = () => {
         <div className="absolute top-8 md:top-10 left-1/2 w-24 md:w-32 h-[1px] bg-black/5 md:bg-black/10 -translate-x-1/2" />
         <div className="absolute bottom-8 md:bottom-10 left-1/2 w-24 md:w-32 h-[1px] bg-black/5 md:bg-black/10 -translate-x-1/2" />
       </div>
-
-      {/* Split Navigation - Integrated HUD Style */}
-      <nav className={`fixed top-0 left-0 w-full z-[100] h-14 md:h-auto px-6 md:px-12 md:py-10 grid grid-cols-3 items-center pointer-events-none font-mono transition-all duration-500 ${
-        activeSection === 'home' 
-          ? 'bg-transparent border-none md:bg-transparent md:border-none' 
-          : 'bg-white backdrop-blur-md border-b border-black/5 md:bg-transparent md:backdrop-blur-none md:border-none'
-      }`}>
-        {/* Left Side: Logo & Status */}
-        <div className="flex justify-start items-center h-full">
-          <motion.div 
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="pointer-events-auto cursor-pointer flex flex-col justify-center"
-            whileHover={{ x: 5 }}
-            onClick={() => setActiveSection('home')}
-          >
-            <div className="flex items-center gap-3 md:gap-4">
-              <div className={`border border-black/20 flex items-center justify-center font-bold relative transition-all duration-500 ${
-                activeSection === 'home' 
-                  ? 'w-8 h-8 md:w-12 md:h-12 text-base md:text-xl' 
-                  : 'w-8 h-8 md:w-10 md:h-10 text-base md:text-[14px]'
-              }`}>
-                <div className="absolute -top-0.5 -left-0.5 w-1 h-1 border-t border-l border-black" />
-                <div className="absolute -bottom-0.5 -right-0.5 w-1 h-1 border-b border-r border-black" />
-                MO
-              </div>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Center: Page Title (Mobile only, non-home) */}
-        <div className="flex justify-center items-center h-full">
-          {activeSection !== 'home' && (
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="md:hidden text-[11px] font-bold uppercase tracking-[0.4em] text-black whitespace-nowrap text-center"
-            >
-              {tabs.find(t => t.id === activeSection)?.label}
-            </motion.div>
-          )}
-        </div>
-
-        {/* Right Side: Navigation Links */}
-        <div className="pointer-events-auto flex justify-end items-center h-full">
-          {/* Mobile Menu Toggle */}
-          <button 
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 bg-black text-white border border-black/10 backdrop-blur-md shadow-lg active:scale-95 transition-transform"
-          >
-            {isMenuOpen ? <X size={18} /> : <Menu size={18} />}
-          </button>
-
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-10">
-            {tabs.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveSection(tab.id)}
-                className={`text-[10px] font-bold uppercase tracking-[0.4em] transition-all duration-500 relative py-2 group whitespace-nowrap ${
-                  activeSection === tab.id ? 'text-black' : 'text-black/30 hover:text-black/60'
-                }`}
-              >
-                <span className="relative z-10">{tab.label}</span>
-                {activeSection === tab.id && (
-                  <motion.div 
-                    layoutId="nav-glow"
-                    className="absolute inset-0 bg-black/5 -z-10 blur-sm rounded-sm"
-                  />
-                )}
-                <div className={`absolute bottom-0 left-0 h-[1px] bg-black transition-all duration-500 ${activeSection === tab.id ? 'w-full' : 'w-0 group-hover:w-1/2'}`} />
-              </button>
-            ))}
-          </div>
-
-          <div className="hidden md:flex items-center gap-4 opacity-20">
-            <div className="h-[1px] w-24 bg-black" />
-            <span className="text-[9px] tracking-[0.5em]">{t.navInterface}</span>
-          </div>
-        </div>
-      </nav>
 
       {/* Mobile Dropdown Menu - Moved outside nav */}
       <AnimatePresence>
@@ -892,7 +901,7 @@ const App: React.FC = () => {
       </AnimatePresence>
 
       {/* Main Content - Tabbed with AnimatePresence */}
-      <main className={`relative z-10 w-full h-screen overflow-hidden transition-all duration-500 ${activeSection === 'home' ? 'pt-0' : 'pt-14 md:pt-0'}`}>
+      <main className="relative z-10 w-full h-screen overflow-hidden transition-all duration-500">
         <AnimatePresence mode="wait">
           {renderSection()}
         </AnimatePresence>
