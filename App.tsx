@@ -102,7 +102,7 @@ const PageLayout: React.FC<{
                 <div className="w-1.5 h-1.5 bg-black rounded-[0.3px] animate-pulse" />
                 <span className="text-[8px] md:text-[10px] font-mono font-bold uppercase tracking-[0.3em] md:tracking-[0.4em]">Page_Overview</span>
               </div>
-              <h1 className="text-3xl md:text-5xl font-mono font-bold text-fg mb-3 md:mb-4 uppercase tracking-tighter leading-none">
+              <h1 className="text-3xl md:text-6xl font-mono font-bold text-fg mb-3 md:mb-6 uppercase tracking-tighter leading-none">
                 {title.replace('_', ' ')}
               </h1>
               {description && (
@@ -462,7 +462,7 @@ const App: React.FC = () => {
                 <div className="text-center space-y-4 md:space-y-6">
                   <motion.h2 
                     key={titles[titleIndex]}
-                    className={`display-text text-3xl sm:text-5xl md:text-7xl tracking-tight leading-none transition-colors duration-1000 ${isCyberMode ? 'text-cyan-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]' : 'text-black'}`}
+                    className={`display-text text-3xl sm:text-6xl md:text-8xl tracking-tight leading-none transition-colors duration-1000 ${isCyberMode ? 'text-cyan-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]' : 'text-black'}`}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
@@ -517,8 +517,9 @@ const App: React.FC = () => {
                     <span className="text-[8px] md:text-[10px] font-mono opacity-60">{isCyberMode ? 'VAPOR_V1' : 'XENON_V4'}</span>
                   </div>
                 </div>
-                <div className="text-right">
+                <div className="text-right flex flex-col items-end">
                   <span className="text-[9px] font-mono opacity-20 uppercase tracking-[0.2em]">{t.copyright} 2026 {isCyberMode ? 'Cyber_Labs' : 'Xenon_Labs'}</span>
+                  <span className="text-[6px] font-mono opacity-10 uppercase tracking-widest mt-1">v1.2.1-build-0401</span>
                 </div>
               </div>
             </div>
@@ -753,23 +754,19 @@ const App: React.FC = () => {
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="pointer-events-auto cursor-pointer flex items-center gap-4"
+            className="pointer-events-auto cursor-pointer flex flex-col justify-center"
             whileHover={{ x: 5 }}
             onClick={() => setActiveSection('home')}
           >
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 md:gap-4">
               <div className={`border border-black/20 flex items-center justify-center font-bold relative transition-all duration-500 ${
                 activeSection === 'home' 
-                  ? 'w-10 h-10 text-lg' 
-                  : 'w-8 h-8 text-sm'
+                  ? 'w-8 h-8 md:w-12 md:h-12 text-base md:text-xl' 
+                  : 'w-8 h-8 md:w-10 md:h-10 text-base md:text-[14px]'
               }`}>
                 <div className="absolute -top-0.5 -left-0.5 w-1 h-1 border-t border-l border-black" />
                 <div className="absolute -bottom-0.5 -right-0.5 w-1 h-1 border-b border-r border-black" />
                 MO
-              </div>
-              <div className="flex flex-col">
-                <span className="text-[10px] font-bold tracking-[0.2em] uppercase leading-none">DREAMY</span>
-                <span className="text-[7px] opacity-40 uppercase tracking-widest mt-1">Portfolio_v4</span>
               </div>
             </div>
           </motion.div>
