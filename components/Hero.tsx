@@ -25,7 +25,7 @@ const Hero: React.FC = () => {
         >
           <div className="text-[8px] md:text-[10px] font-mono uppercase tracking-[0.3em] mb-8 text-fg/40">SUBJECT_ID: MOUNA_OUATTARA_02</div>
           
-          <h1 className="text-[12vw] md:text-[10vw] lg:text-[12rem] font-bold tracking-tighter leading-[0.85] mb-12 text-fg uppercase">
+          <h1 className="text-[10vw] md:text-[8vw] lg:text-[10rem] font-bold tracking-tighter leading-[0.85] mb-8 text-fg uppercase">
             PROTO<br />
             <span className="text-accent glossy px-6 inline-block">TYPE</span>
           </h1>

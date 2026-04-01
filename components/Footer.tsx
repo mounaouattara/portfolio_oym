@@ -13,8 +13,16 @@ const Footer: React.FC = () => {
       
       <div className="flex flex-col md:flex-row justify-between items-start gap-16">
         <div className="flex flex-col items-start">
-          <h2 className="text-4xl font-mono font-bold text-fg mb-6 tracking-tighter uppercase glitch-text" data-text="Mouna Ouattara">Mouna Ouattara</h2>
-          <p className="text-[10px] font-mono font-bold text-black/40 uppercase tracking-[0.4em]">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-8 h-8 border border-black/20 flex items-center justify-center font-bold text-xs relative">
+              <div className="absolute -top-0.5 -left-0.5 w-1 h-1 border-t border-l border-black" />
+              <div className="absolute -bottom-0.5 -right-0.5 w-1 h-1 border-b border-r border-black" />
+              MO
+            </div>
+            <span className="text-sm font-bold tracking-[0.2em] uppercase">DREAMY</span>
+          </div>
+          <h2 className="text-3xl font-mono font-bold text-fg mb-4 tracking-tighter uppercase glitch-text" data-text="Mouna Ouattara">Mouna Ouattara</h2>
+          <p className="text-[9px] font-mono font-bold text-black/40 uppercase tracking-[0.4em]">
             Data_Science // Gen_AI // 2024-PRESENT
           </p>
         </div>

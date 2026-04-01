@@ -52,7 +52,7 @@ const ProjectCard: React.FC<{ project: Project; onOpenProject: (project: Project
           </div>
         </div>
         
-        <h3 className="text-sm md:text-3xl font-mono font-bold text-fg mb-1 md:mb-4 tracking-tight group-hover:text-black transition-colors uppercase leading-none">{project.title}</h3>
+        <h3 className="text-sm md:text-2xl font-mono font-bold text-fg mb-1 md:mb-3 tracking-tight group-hover:text-black transition-colors uppercase leading-none">{project.title}</h3>
         
         <div className="space-y-1 md:space-y-4 overflow-hidden">
           <p className="text-[6px] md:text-[10px] text-black/60 font-mono italic line-clamp-1 md:line-clamp-2 md:opacity-0 group-hover:opacity-100 transition-all duration-500 transform md:translate-y-4 group-hover:translate-y-0">
@@ -166,18 +166,24 @@ const ProjectsSection: React.FC<{ lang: 'fr' | 'en' }> = ({ lang }) => {
         <RoboticTree height={800} color="black" delay={2.2} scale={1.3} />
       </div>
 
-      {/* Technical Annotations */}
-      <div className="absolute top-10 left-10 text-[8px] font-mono opacity-20 uppercase tracking-widest hidden lg:block">
-        [SEC_ZONE_04] // LAB_ENV_INIT
+      {/* Technical Annotations - Reduced for cleaner look */}
+      <div className="absolute top-10 left-10 text-[7px] font-mono opacity-10 uppercase tracking-widest hidden lg:block">
+        [SEC_ZONE_04]
       </div>
-      <div className="absolute bottom-20 right-10 text-[8px] font-mono opacity-20 uppercase tracking-widest hidden lg:block rotate-90 origin-right">
-        DATA_STREAM_ACTIVE // 0x44F2
+      <div className="absolute bottom-20 right-10 text-[7px] font-mono opacity-10 uppercase tracking-widest hidden lg:block rotate-90 origin-right">
+        DATA_STREAM // 0x44F2
       </div>
 
-      <div className="mb-6 md:mb-12 w-full relative z-10">
-        <div className="flex flex-col lg:flex-row lg:items-end justify-center lg:justify-end gap-4 md:gap-12">
-          {/* Category Filter - Horizontal Scroll on Mobile */}
-          <div className="flex flex-row md:flex-wrap justify-start md:justify-end gap-2 md:gap-3 overflow-x-auto scrollbar-hide pb-2 md:pb-0 w-full md:w-auto">
+      <div className="mb-8 md:mb-16 w-full relative z-10">
+        <div className="flex flex-col items-center justify-center gap-6">
+          <div className="flex items-center gap-4 w-full">
+            <div className="h-[1px] flex-1 bg-black/5" />
+            <span className="text-[9px] font-mono font-bold opacity-30 uppercase tracking-[0.4em]">Filter_Archives</span>
+            <div className="h-[1px] flex-1 bg-black/5" />
+          </div>
+          
+          {/* Category Filter - Centered and cleaner */}
+          <div className="flex flex-wrap justify-center gap-2 md:gap-4 w-full">
             {categories.map(cat => {
               const id = cat === 'Computer Vision' ? 'vision' : 
                          cat === 'NLP' ? 'nlp' : 
@@ -188,13 +194,20 @@ const ProjectsSection: React.FC<{ lang: 'fr' | 'en' }> = ({ lang }) => {
                   key={cat}
                   id={id}
                   onClick={() => setActiveCategory(cat)}
-                  className={`px-4 py-2 md:px-5 md:py-2 text-[8px] md:text-[9px] font-bold uppercase tracking-[0.1em] md:tracking-[0.2em] transition-all duration-500 border font-mono ${
+                  className={`px-6 py-2 text-[9px] font-bold uppercase tracking-[0.2em] transition-all duration-300 border font-mono relative overflow-hidden group ${
                     activeCategory === cat 
-                      ? 'bg-black text-white border-black shadow-[0_0_15px_rgba(0,0,0,0.1)]' 
-                      : 'text-fg/40 border-black/10 hover:border-black/30 bg-white/50 backdrop-blur-sm'
+                      ? 'bg-black text-white border-black' 
+                      : 'text-fg/50 border-black/10 hover:border-black/30 bg-white/50'
                   }`}
                 >
-                  {cat === 'Tous' ? (lang === 'fr' ? 'TOUS' : 'ALL') : cat}
+                  <span className="relative z-10">{cat === 'Tous' ? (lang === 'fr' ? 'TOUS' : 'ALL') : cat}</span>
+                  {activeCategory === cat && (
+                    <motion.div 
+                      layoutId="activeFilter"
+                      className="absolute inset-0 bg-black -z-0"
+                      transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                    />
+                  )}
                 </button>
               );
             })}
